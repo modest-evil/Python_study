@@ -8,12 +8,12 @@ import bookstore_funcs
 def test_get_books():
     show = bookstore_funcs.Bookstore("https://demoqa.com")
 
-    print(show.get_books())
+    #print(show.get_books())
 
-    # temp = json.loads(str(show.get_books()).replace("'", '"'))
-    # status = temp["status"]
-    #
-    # assert status == 200
+    temp = show.get_books()
+    status = temp["status"]
+
+    assert status == 200
 
 
 # take isbn from list of isbn's; check isbn of added book in user's list

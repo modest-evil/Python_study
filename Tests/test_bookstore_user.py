@@ -1,19 +1,19 @@
-import requests
 import json
-import user_funcs
+
+from user_funcs import User
 
 
 def test_create_account():
-    user = user_funcs.User("https://demoqa.com")
+    user = User("https://demoqa.com")
 
-    temp = json.loads(str(user.create_user("Dori", "Dori123!")).replace("'", '"'))
+    temp = user.create_user("Dori", "Dori123!")
     status = temp["status"]
 
     assert status == 201
 
 
 def test_generate_token():
-    user = user_funcs.User("https://demoqa.com")
+    user = User("https://demoqa.com")
 
     user.create_user("Alan", "Alan123!")
 
@@ -24,7 +24,7 @@ def test_generate_token():
 
 
 def test_is_logged_in():
-    user = user_funcs.User("https://demoqa.com")
+    user = User("https://demoqa.com")
 
     user.create_user("Bene", "Bene123!")
     user.log_in("Bene", "Bene123!")
@@ -38,26 +38,28 @@ def test_is_logged_in():
 
 
 def test_get_user_info():
-     user = user_funcs.User("https://demoqa.com")
+     user = User("https://demoqa.com")
 
-     temp = json.loads(str(user.create_user("Cody", "Cody123!")).replace("'", '"'))
-     result = json.loads(str(temp["body"]).replace("'", '"'))
-     userId = result["userID"]
-     print(userId)
+     temp = user.create_user("Cody", "Cody123!")
+     #result = json.loads(str(temp["body"]).replace("'", '"'))
+     print(user.userId)
+     # userId = result["userID"]
+     # print(userId)
 
-     temp = json.loads(str(user.log_in("Cody", "Cody123!")).replace("'", '"'))
-     result = json.loads(str(temp["body"]).replace("'", '"'))
-     sessionToken = result["token"]
-     print(sessionToken)
+     temp = user.log_in("Cody", "Cody123!")
+     print(user.sessionToken)
+     # result = json.loads(str(temp["body"]).replace("'", '"'))
+     # sessionToken = result["token"]
+     # print(sessionToken)
 
-     temp = json.loads(str(user.get_user_info(sessionToken, userId)).replace("'", '"'))
+     temp = json.loads(str(user.get_user_info(user.sessionToken, user.userId)).replace("'", '"'))
      status = temp["status"]
 
      assert status == 200
 
 
 def test_delete_account():
-    user = user_funcs.User("https://demoqa.com")
+    user = User("https://demoqa.com")
 
     temp = json.loads(str(user.create_user("Elon", "Elon123!")).replace("'", '"'))
     result = json.loads(str(temp["body"]).replace("'", '"'))

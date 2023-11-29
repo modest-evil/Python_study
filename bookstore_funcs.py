@@ -16,9 +16,20 @@ class Bookstore:
             'Content-Type': 'application/json'
         }
 
-        response = requests.request("GET", url, headers=headers, data=payload)
+        try:
+            response = requests.request("GET", url, headers=headers, data=payload)
+
+        except:
+            print('Error json parsing')
 
         return {"status": response.status_code, "body": response.json()}
+        # try:
+        #     #temp = json.loads(str(response.json()).replace("'", '"'))
+        #     print( str(response.json()))
+        # except:
+        #     print('Error json parsing')
+        #
+        # return {"status": response.status_code, "body": None}
 
 
     def add_books(self, userId, sessionId, isbn):

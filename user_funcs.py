@@ -24,10 +24,10 @@ class User:
         response = requests.request("POST", url, headers=headers, data=payload)
 
         temp = json.loads(str(response.json()).replace("'", '"'))
-        userId = temp["userID"]
-        print(userId)
+        self.userId = temp["userID"]
+        print(self.userId)
 
-        return {"status": response.status_code, "body": response.json()}
+        return {"status": response.status_code, "body": temp}
 
 
     def log_in(self, userName, password):
@@ -43,8 +43,8 @@ class User:
         response = requests.request("POST", url, headers=headers, data=payload)
 
         temp = json.loads(str(response.json()).replace("'", '"'))
-        sessionToken = temp["token"]
-        print(sessionToken)
+        self.sessionToken = temp["token"]
+        print(self.sessionToken)
 
         return {"status": response.status_code, "body": response.json()}
 
