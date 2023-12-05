@@ -23,7 +23,8 @@ class User:
 
         response = requests.request("POST", url, headers=headers, data=payload)
 
-        temp = json.loads(str(response.json()).replace("'", '"'))
+        #temp = json.loads(str(response.json()).replace("'", '"'))
+        temp = response.json()
         self.userId = temp["userID"]
         print(self.userId)
 
@@ -42,7 +43,7 @@ class User:
 
         response = requests.request("POST", url, headers=headers, data=payload)
 
-        temp = json.loads(str(response.json()).replace("'", '"'))
+        temp = response.json()
         self.sessionToken = temp["token"]
         print(self.sessionToken)
 
@@ -89,7 +90,5 @@ class User:
             'Authorization': ('Bearer ' + sessionId)}
 
         response = requests.request("DELETE", url, headers=headers, data=payload)
-
-        #return {"status": response.status_code, "body": response.json()}
 
         return response.status_code

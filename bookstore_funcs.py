@@ -22,14 +22,14 @@ class Bookstore:
         except:
             print('Error json parsing')
 
+        # get all values of key "firstName"
+        # first_names = [employee["firstName"] for employee in parsed_data["employees"]]
+
+        self.booklist = [book["isbn"] for book in response.json()["books"]]
+        print(self.booklist)
+
         return {"status": response.status_code, "body": response.json()}
-        # try:
-        #     #temp = json.loads(str(response.json()).replace("'", '"'))
-        #     print( str(response.json()))
-        # except:
-        #     print('Error json parsing')
-        #
-        # return {"status": response.status_code, "body": None}
+
 
 
     def add_books(self, userId, sessionId, isbn):
