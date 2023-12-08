@@ -23,8 +23,8 @@ def test_add_book():
     user.log_in("Fido", "Fido123!")
 
     #temp = show.add_books(user.userId, user.sessionToken, "9781449325862")
-    show.get_books()
-    isbn = show.booklist.pop(0)
+    isbns = show.get_booklist()
+    isbn = isbns.pop(0)
     temp = show.add_books(user.userId, user.sessionToken, isbn)
     status = temp["status"]
 
@@ -38,9 +38,9 @@ def test_delete_user_books():
     user.create_user("Gary", "Gary123!")
     user.log_in("Gary", "Gary123!")
 
-    show.get_books()
-    isbn_1 = show.booklist.pop(0)
-    isbn_2 = show.booklist.pop(1)
+    isbns = show.get_booklist()
+    isbn_1 = isbns.pop(0)
+    isbn_2 = isbns.pop(1)
 
     # show.add_books(user.userId, user.sessionToken, "9781449325862")
     # show.add_books(user.userId, user.sessionToken, "9781449331818")
@@ -60,9 +60,9 @@ def test_delete_one_book():
     user.create_user("Homa", "Homa123!")
     user.log_in("Homa", "Homa123!")
 
-    show.get_books()
-    isbn_1 = show.booklist.pop(0)
-    isbn_2 = show.booklist.pop(1)
+    isbns = show.get_booklist()
+    isbn_1 = isbns.pop(0)
+    isbn_2 = isbns.pop(1)
 
     show.add_books(user.userId, user.sessionToken, isbn_1)
     show.add_books(user.userId, user.sessionToken, isbn_2)
@@ -79,10 +79,10 @@ def test_change_isbn():
     user.create_user("Iren", "Iren123!")
     user.log_in("Iren", "Iren123!")
 
-    show.get_books()
-    isbn_1 = show.booklist.pop(0)
-    isbn_2 = show.booklist.pop(1)
-    isbn_3 = show.booklist.pop(2)
+    isbns = show.get_booklist()
+    isbn_1 = isbns.pop(0)
+    isbn_2 = isbns.pop(1)
+    isbn_3 = isbns.pop(2)
 
     show.add_books(user.userId, user.sessionToken, isbn_1)
     show.add_books(user.userId, user.sessionToken, isbn_2)

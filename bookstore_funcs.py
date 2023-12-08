@@ -25,11 +25,19 @@ class Bookstore:
         # get all values of key "firstName"
         # first_names = [employee["firstName"] for employee in parsed_data["employees"]]
 
-        self.booklist = [book["isbn"] for book in response.json()["books"]]
-        print(self.booklist)
+        # self.booklist = [book["isbn"] for book in response.json()["books"]]
+        # print(self.booklist)
 
         return {"status": response.status_code, "body": response.json()}
 
+    def get_booklist(self):
+        res = self.get_books()
+        response = res["body"]
+
+        booklist = [book["isbn"] for book in response["books"]]
+        print(booklist)
+
+        return booklist
 
 
     def add_books(self, userId, sessionId, isbn):
