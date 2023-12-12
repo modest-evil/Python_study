@@ -1,12 +1,15 @@
 import json
-
 import requests
+from demoqa_functions import Demoqa
 
-class Bookstore:
+class Bookstore(Demoqa):
 
     def __init__(self, host):
-        self.host = host
+        super().__init__(host)
 
+
+    # def __init__(self, host):
+    #     self.host = host
 
     def get_books(self):
         url = self.host + "/BookStore/v1/Books"

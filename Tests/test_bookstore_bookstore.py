@@ -2,11 +2,14 @@ import json
 import requests
 from user_funcs import User
 from bookstore_funcs import Bookstore
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+url = os.getenv("URL")
 
-#Why it can not parse string? Need to be able retrieve list of isbn's from responce
 def test_get_books():
-    show = Bookstore("https://demoqa.com")
+    show = Bookstore(url)
 
     temp = show.get_books()
     status = temp["status"]
@@ -14,10 +17,9 @@ def test_get_books():
     assert status == 200
 
 
-# take isbn from list of isbn's; check isbn of added book in user's list
 def test_add_book():
-    user = User("https://demoqa.com")
-    show = Bookstore("https://demoqa.com")
+    user = User(url)
+    show = Bookstore(url)
 
     user.create_user("Fido", "Fido123!")
     user.log_in("Fido", "Fido123!")
@@ -30,10 +32,10 @@ def test_add_book():
 
     assert status == 201
 
-#take isbn from list of isbn's; check user has no books
+
 def test_delete_user_books():
-    user = User("https://demoqa.com")
-    show = Bookstore("https://demoqa.com")
+    user = User(url)
+    show = Bookstore(url)
 
     user.create_user("Gary", "Gary123!")
     user.log_in("Gary", "Gary123!")
@@ -42,9 +44,6 @@ def test_delete_user_books():
     isbn_1 = isbns.pop(0)
     isbn_2 = isbns.pop(1)
 
-    # show.add_books(user.userId, user.sessionToken, "9781449325862")
-    # show.add_books(user.userId, user.sessionToken, "9781449331818")
-
     show.add_books(user.userId, user.sessionToken, isbn_1)
     show.add_books(user.userId, user.sessionToken, isbn_2)
 
@@ -52,10 +51,10 @@ def test_delete_user_books():
 
     assert status == 204
 
-# check that user's book list does not contain isbn of removed book
+
 def test_delete_one_book():
-    user = User("https://demoqa.com")
-    show = Bookstore("https://demoqa.com")
+    user = User(url)
+    show = Bookstore(url)
 
     user.create_user("Homa", "Homa123!")
     user.log_in("Homa", "Homa123!")
@@ -73,8 +72,8 @@ def test_delete_one_book():
 
 
 def test_change_isbn():
-    user = User("https://demoqa.com")
-    show = Bookstore("https://demoqa.com")
+    user = User(url)
+    show = Bookstore(url)
 
     user.create_user("Iren", "Iren123!")
     user.log_in("Iren", "Iren123!")

@@ -1,15 +1,17 @@
 import json
-import demoqa_functions
 import requests
+from demoqa_functions import Demoqa
 
 
-class User:
+class User(Demoqa):
     userId = None
     sessionToken = None
 
     def __init__(self, host):
-        self.host = host
+        super().__init__(host)
 
+    # def __init__(self, host):
+    #     self.host = host
 
     def create_user(self, userName, password):
         url = self.host + "/Account/v1/User"

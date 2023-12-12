@@ -1,10 +1,17 @@
 import json
 
+from demoqa_functions import Demoqa
 from user_funcs import User
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+url = os.getenv("URL")
 
 
 def test_create_account():
-    user = User("https://demoqa.com")
+    user = User(url)
 
     temp = user.create_user("Dori", "Dori123!")
     status = temp["status"]
@@ -13,7 +20,7 @@ def test_create_account():
 
 
 def test_generate_token():
-    user = User("https://demoqa.com")
+    user = User(url)
 
     user.create_user("Alan", "Alan123!")
 
@@ -24,7 +31,7 @@ def test_generate_token():
 
 
 def test_is_logged_in():
-    user = User("https://demoqa.com")
+    user = User(url)
 
     user.create_user("Bene", "Bene123!")
     user.log_in("Bene", "Bene123!")
@@ -36,7 +43,7 @@ def test_is_logged_in():
 
 
 def test_get_user_info():
-     user = User("https://demoqa.com")
+     user = User(url)
 
      user.create_user("Cody", "Cody123!")
      print(user.userId)
@@ -51,7 +58,7 @@ def test_get_user_info():
 
 
 def test_delete_account():
-    user = User("https://demoqa.com")
+    user = User(url)
 
     user.create_user("Elon", "Elon123!")
     user.log_in("Elon", "Elon123!")
