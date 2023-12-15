@@ -6,6 +6,9 @@ from demoqa_functions import Demoqa
 class User(Demoqa):
     userId = None
     sessionToken = None
+    username = None
+    password = None
+    save_user = False
 
     def __init__(self, host):
         super().__init__(host)
@@ -29,6 +32,8 @@ class User(Demoqa):
         temp = response.json()
         self.userId = temp["userID"]
         print(self.userId)
+        self.username = userName
+        self.password = password
 
         return {"status": response.status_code, "body": temp}
 
