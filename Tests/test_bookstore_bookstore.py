@@ -1,5 +1,6 @@
-import json
-import requests
+from demoqa_fixtures import create_and_log_in
+from demoqa_fixtures import cleanup
+
 from user_funcs import User
 from bookstore_funcs import Bookstore
 from dotenv import load_dotenv
@@ -10,35 +11,22 @@ url = os.getenv("URL")
 
 def test_get_books():
     show = Bookstore(url)
-
-    temp = show.get_books()
-    status = temp["status"]
-
-    assert status == 200
+    assert show.get_books()["status"] == 200
 
 
-def test_add_book():
-    user = User(url)
+def test_add_book(create_and_log_in):
+    user = create_and_log_in
     show = Bookstore(url)
 
-    user.create_user("Fido", "Fido123!")
-    user.log_in("Fido", "Fido123!")
-
-    #temp = show.add_books(user.userId, user.sessionToken, "9781449325862")
     isbns = show.get_booklist()
     isbn = isbns.pop(0)
-    temp = show.add_books(user.userId, user.sessionToken, isbn)
-    status = temp["status"]
 
-    assert status == 201
+    assert show.add_books(user.userId, user.sessionToken, isbn)["status"] == 201
 
 
-def test_delete_user_books():
-    user = User(url)
+def test_delete_user_books(create_and_log_in):
+    user = create_and_log_in
     show = Bookstore(url)
-
-    user.create_user("Gary", "Gary123!")
-    user.log_in("Gary", "Gary123!")
 
     isbns = show.get_booklist()
     isbn_1 = isbns.pop(0)
@@ -47,17 +35,12 @@ def test_delete_user_books():
     show.add_books(user.userId, user.sessionToken, isbn_1)
     show.add_books(user.userId, user.sessionToken, isbn_2)
 
-    status = show.delete_user_books(user.userId, user.sessionToken)
-
-    assert status == 204
+    assert show.delete_user_books(user.userId, user.sessionToken) == 204
 
 
-def test_delete_one_book():
-    user = User(url)
+def test_delete_one_book(create_and_log_in):
+    user = create_and_log_in
     show = Bookstore(url)
-
-    user.create_user("Homa", "Homa123!")
-    user.log_in("Homa", "Homa123!")
 
     isbns = show.get_booklist()
     isbn_1 = isbns.pop(0)
@@ -66,17 +49,12 @@ def test_delete_one_book():
     show.add_books(user.userId, user.sessionToken, isbn_1)
     show.add_books(user.userId, user.sessionToken, isbn_2)
 
-    status = show.delete_one_book(user.userId, user.sessionToken, isbn_1)
-
-    assert status == 204
+    assert show.delete_one_book(user.userId, user.sessionToken, isbn_1) == 204
 
 
-def test_change_isbn():
-    user = User(url)
+def test_change_isbn(create_and_log_in):
+    user = create_and_log_in
     show = Bookstore(url)
-
-    user.create_user("Iren", "Iren123!")
-    user.log_in("Iren", "Iren123!")
 
     isbns = show.get_booklist()
     isbn_1 = isbns.pop(0)
@@ -86,8 +64,5 @@ def test_change_isbn():
     show.add_books(user.userId, user.sessionToken, isbn_1)
     show.add_books(user.userId, user.sessionToken, isbn_2)
 
-    temp = show.change_isbn(isbn_1, isbn_3, user.userId, user.sessionToken)
-    status = temp["status"]
-
-    assert status == 200
+    assert show.change_isbn(isbn_1, isbn_3, user.userId, user.sessionToken)["status"] == 200
 

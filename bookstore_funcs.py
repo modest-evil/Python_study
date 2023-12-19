@@ -7,7 +7,6 @@ class Bookstore(Demoqa):
     def __init__(self, host):
         super().__init__(host)
 
-
     # def __init__(self, host):
     #     self.host = host
 
