@@ -1,4 +1,4 @@
-from search_pairs import search_pairs
+from src.search_pairs import search_pairs
 import pytest
 
 

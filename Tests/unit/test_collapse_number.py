@@ -1,4 +1,4 @@
-from collapse_number import collapse
+from src.collapse_number import collapse
 import pytest
 
 

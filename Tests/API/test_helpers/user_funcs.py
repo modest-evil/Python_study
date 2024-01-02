@@ -1,6 +1,6 @@
 import json
 import requests
-from demoqa_functions import Demoqa
+from Tests.API.test_helpers.demoqa_functions import Demoqa
 
 
 class User(Demoqa):

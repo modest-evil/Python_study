@@ -1,10 +1,9 @@
-from demoqa_fixtures import create_and_log_in
-from demoqa_fixtures import cleanup
-
-from user_funcs import User
-from bookstore_funcs import Bookstore
+from Tests.API.test_helpers.bookstore_funcs import Bookstore
 from dotenv import load_dotenv
 import os
+
+from Tests.API.test_fixtures.demoqa_fixtures import cleanup
+from Tests.API.test_fixtures.demoqa_fixtures import create_and_log_in
 
 load_dotenv()
 url = os.getenv("URL")

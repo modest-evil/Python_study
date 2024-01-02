@@ -1,4 +1,4 @@
-from square_sum import square_sum
+from src.square_sum import square_sum
 import pytest
 
 

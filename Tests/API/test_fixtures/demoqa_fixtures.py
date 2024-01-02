@@ -1,6 +1,6 @@
 import pytest
 
-from user_funcs import User
+from Tests.API.test_helpers.user_funcs import User
 from dotenv import load_dotenv
 import os
 

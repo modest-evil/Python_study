@@ -1,8 +1,8 @@
-from demoqa_fixtures import cleanup
-from demoqa_fixtures import create_account
-from demoqa_fixtures import create_and_log_in
 from dotenv import load_dotenv
 import os
+from Tests.API.test_fixtures.demoqa_fixtures import cleanup
+from Tests.API.test_fixtures.demoqa_fixtures import create_account
+from Tests.API.test_fixtures.demoqa_fixtures import create_and_log_in
 
 load_dotenv()
 test_username = os.getenv("USERNAME")
