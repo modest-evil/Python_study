@@ -1,6 +1,12 @@
 import re
 import pytest
 from playwright.sync_api import Page, expect
+from playwright.sync_api import sync_playwright
+
+# with sync_playwright() as playwright:
+#     browser = playwright.firefox.launch()
+#     page = browser.new_page()
+#     page.goto("https://demoqa.com/login")
 
 #pytest test_demoqa_ui.py --browser firefox
 
@@ -22,9 +28,16 @@ def test_main_navigation(page: Page):
 
 
 def test_user_login(page: Page):
+
+    # with sync_playwright() as playwright:
+    #     browser = playwright.firefox.launch(headless=False)
+    #     page = browser.new_page()
+    #     page.goto("https://demoqa.com/login")
+
     page.goto("https://demoqa.com/login")
 
-    page.get_by_label("userName").fill("Anne")
+    username_field = page.get_by_label("userName")
+    username_field.fill("Anne")
     page.get_by_label("password").fill("Anne123!")
 
     page.get_by_role("button", name="login").click()
