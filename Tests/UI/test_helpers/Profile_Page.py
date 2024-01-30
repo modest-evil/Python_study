@@ -11,17 +11,32 @@ class ProfilePage:
         self.page = page
         self.url = url
 
+    def log_out(self):
+        self.page.get_by_role("button", name="Log out").click()
 
     def go_to_bookstore(self):
         self.page.get_by_role("button", name="Go To Book Store").click()
 
+    def search(self, to_search):
+        self.page.get_by_placeholder("Type to search").click()
+        self.page.get_by_placeholder("Type to search").fill(to_search)
+        self.page.get_by_placeholder("Type to search").press("Enter")
+
 
 #    def get_user_books(self):
 
-#    def get_user_name(self):
+    def get_user_name(self):
+        return self.page.get_by_label("userName-value")
 
-#    def delete_book(self):
+    def delete_book(self, book_title):
+        self.page.get_by_role("row", name="image " + book_title).locator("path").click()
+        self.page.once("dialog", lambda dialog: dialog.dismiss())
+        self.page.get_by_role("button", name="OK").click()
 
-#    def delete_all_books(self):
+    def delete_all_books(self):
+        self.page.get_by_role("button", name="Delete All Books").click()
+        self.page.once("dialog", lambda dialog: dialog.dismiss())
+        self.page.get_by_role("button", name="OK").click()
+
 
 
