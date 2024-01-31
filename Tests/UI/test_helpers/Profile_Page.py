@@ -3,13 +3,16 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-url = os.getenv("PROFILE_PAGE_URL")
+url = os.getenv("URL")
 
 class ProfilePage:
 
     def __init__(self, page):
         self.page = page
-        self.url = url
+        self.url = url + "/profile"
+
+    def open(self):
+        self.page.goto(self.url)
 
     def log_out(self):
         self.page.get_by_role("button", name="Log out").click()
@@ -25,8 +28,8 @@ class ProfilePage:
 
 #    def get_user_books(self):
 
-    def get_user_name(self):
-        return self.page.get_by_label("userName-value")
+    # def get_user_name(self):
+    #     return self.page.get_by_label("userName-value")
 
     def delete_book(self, book_title):
         self.page.get_by_role("row", name="image " + book_title).locator("path").click()

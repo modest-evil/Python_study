@@ -10,6 +10,8 @@ class LoginPage:
     def __init__(self, page):
         self.page = page
         self.url = url
+
+    def open(self):
         self.page.goto(self.url)
 
     def fill_username(self, name):
