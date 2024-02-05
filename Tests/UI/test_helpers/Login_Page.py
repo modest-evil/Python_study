@@ -3,13 +3,13 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-url = os.getenv("LOGIN_PAGE_URL")
+url = os.getenv("URL")
 
 class LoginPage:
 
     def __init__(self, page):
         self.page = page
-        self.url = url
+        self.url = url + "/login"
 
     def open(self):
         self.page.goto(self.url)
