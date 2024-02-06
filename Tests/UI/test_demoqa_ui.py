@@ -2,6 +2,7 @@ import re
 import pytest
 from playwright.sync_api import Page, expect
 from playwright.sync_api import sync_playwright
+from Tests.UI.test_helpers import Booklist_functions
 
 # with sync_playwright() as playwright:
 #     browser = playwright.firefox.launch()
@@ -75,3 +76,21 @@ def test_create_user(page: Page):
     #logout
     page.get_by_role("button", name="Log out").click()
     expect(page).to_have_url("https://demoqa.com/login")
+
+
+def test_list_of_books(page: Page):
+    page.goto("https://demoqa.com/login")
+
+    page.get_by_placeholder("UserName").click()
+    page.get_by_placeholder("UserName").fill("Anne")
+    page.get_by_placeholder("Password").click()
+    page.get_by_placeholder("Password").fill("Anne123!")
+    page.get_by_role("button", name="Login").click()
+
+    #print(Booklist_functions.get_booklist(page))
+
+    action_button_list = page.locator('.mr-2').all()
+    count = action_button_list.count(4)
+    print(action_button_list)
+
+    assert count == 4
