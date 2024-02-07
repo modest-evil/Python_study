@@ -88,9 +88,14 @@ def test_list_of_books(page: Page):
     page.get_by_role("button", name="Login").click()
 
     #print(Booklist_functions.get_booklist(page))
+    linklist = []
 
-    action_button_list = page.locator('.mr-2').all()
-    count = action_button_list.count(4)
+#    action_button_list = page.locator('.mr-2').locator('a').all_inner_texts()
+    action_button_list = page.locator('.mr-2 > a').all_inner_texts()
+    for li in page.locator('.mr-2').locator('a'):
+        linklist.append(li.get_attribute('href'))
+ #   action_link_list = page.locator('.mr-2').locator('a').get_attribute('href')
+    count = len(action_button_list)
     print(action_button_list)
 
     assert count == 4
