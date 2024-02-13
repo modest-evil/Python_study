@@ -3,6 +3,7 @@ import pytest
 from playwright.sync_api import Page, expect
 from playwright.sync_api import sync_playwright
 from Tests.UI.test_helpers import Booklist_functions
+import Tests.UI.test_helpers.Booklist_functions
 
 # with sync_playwright() as playwright:
 #     browser = playwright.firefox.launch()
@@ -87,11 +88,21 @@ def test_list_of_books(page: Page):
     page.get_by_placeholder("Password").fill("Anne123!")
     page.get_by_role("button", name="Login").click()
 
+#    page.goto("https://demoqa.com/books")
+
     #print(Booklist_functions.get_booklist(page))
     linklist = []
 
 #    action_button_list = page.locator('.mr-2').locator('a').all_inner_texts()
-    action_button_list = page.locator('.mr-2 > a').all_inner_texts()
+    action_button_list = page.locator('.mr-2 > a').all_text_contents()
+
+    button_list = Booklist_functions.get_booklist(page)
+
+    link = page.get_by_role("link", name=button_list[1]).get_attribute("href")
+
+    links = Booklist_functions.get_book_links(page, button_list)
+
+    isbns = Booklist_functions.get_list_of_isbns(links)
 
 #    action_button_list = page.locator('.mr-2 > a').inner_html()
 #    for li in page.locator('.mr-2').locator('a'):
@@ -109,7 +120,7 @@ def test_list_of_books(page: Page):
     hrefs = page.get_by_role("link")
 
     count = len(action_button_list)
-    ncount = len(hrefs)
+    ncount = len(button_list)
     print(action_button_list)
 
     assert count == 4

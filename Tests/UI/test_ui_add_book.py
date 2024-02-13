@@ -1,6 +1,17 @@
 import re
 import pytest
 from playwright.sync_api import Page, expect
+from Tests.UI.test_helpers.Login_Page import LoginPage
+from Tests.UI.test_helpers.Book_Page import BookPage
+from Tests.UI.test_helpers.Profile_Page import ProfilePage
+from Tests.UI.test_helpers.Bookstore_Page import BookstorePage
+from Tests.UI.test_helpers import Booklist_functions
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+name = os.getenv("UI_TEST_USER")
+password = os.getenv("UI_TEST_PASS")
 
 def test_add_book(page: Page):
     #login
@@ -26,3 +37,23 @@ def test_add_book(page: Page):
 
     #go to profile check you have books
     page.locator("li").filter(has_text="Profile").click()
+
+
+def test_add_book_page(page: Page):
+    login_page = LoginPage(page)
+    login_page.open()
+    login_page.log_in(name, password)
+
+    profile_page = ProfilePage(page)
+    profile_page.go_to_bookstore()
+    Books = Booklist_functions.get_booklist(page)
+
+    bookstore_page = BookstorePage(page)
+    bookstore_page.add_book(Books[1])
+#    bookstore_page.add_book(Books[2])
+
+    profile_page.open()
+    user_books = Booklist_functions.get_booklist(page)
+
+    assert len(user_books) == 1
+
