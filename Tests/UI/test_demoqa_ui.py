@@ -92,10 +92,25 @@ def test_list_of_books(page: Page):
 
 #    action_button_list = page.locator('.mr-2').locator('a').all_inner_texts()
     action_button_list = page.locator('.mr-2 > a').all_inner_texts()
-    for li in page.locator('.mr-2').locator('a'):
-        linklist.append(li.get_attribute('href'))
+
+#    action_button_list = page.locator('.mr-2 > a').inner_html()
+#    for li in page.locator('.mr-2').locator('a'):
+ #   for li in page.locator('.mr-2'):
+ #       linklist.append(li.get_attribute('a'))
  #   action_link_list = page.locator('.mr-2').locator('a').get_attribute('href')
+
+    # linkslist = page.locator('.mr-2 > a')
+    for links in page.locator('.mr-2 > a').element_handle():
+        linkF = links.get_attribute("href")
+        linklist.append(linkF)
+
+#    hrefs_of_page = page.eval_on_selector_all("a[href^='/profile?book=']", "elements => elements.map(element => element.href)")
+
+    hrefs = page.get_by_role("link")
+
     count = len(action_button_list)
+    ncount = len(hrefs)
     print(action_button_list)
 
     assert count == 4
+    assert ncount == 4
