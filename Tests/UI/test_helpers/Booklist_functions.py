@@ -5,10 +5,12 @@ from playwright.sync_api import Page
 load_dotenv()
 url = os.getenv("URL")
 
+
 def get_booklist(page: Page):
     action_button_list = page.locator('.mr-2 > a').all_text_contents()
 
     return action_button_list
+
 
 def get_book_links(page: Page, booklist):
     link_list = []
@@ -22,7 +24,7 @@ def get_list_of_isbns(link_list):
     isbns = []
 
     for link in link_list:
-        isbns.append(link.removeprefix("/profile?book="))
+        isbns.append(link.lstrip("/profile?book="))
 
     return isbns
 

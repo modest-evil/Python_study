@@ -98,7 +98,7 @@ def test_list_of_books(page: Page):
 
     button_list = Booklist_functions.get_booklist(page)
 
-    link = page.get_by_role("link", name=button_list[1]).get_attribute("href")
+    link = page.get_by_role("link", name=button_list[0]).get_attribute("href")
 
     links = Booklist_functions.get_book_links(page, button_list)
 
