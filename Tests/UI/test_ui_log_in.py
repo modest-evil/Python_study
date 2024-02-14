@@ -24,7 +24,7 @@ def test_log_in_user_exists(page: Page):
     page.get_by_text("Anne").click()
 
 
-def test_log_in_page(page: Page):
+def test_log_in(page: Page):
     login_page = LoginPage(page)
     login_page.open()
     login_page.log_in(name, password)

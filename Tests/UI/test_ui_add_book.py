@@ -13,7 +13,7 @@ load_dotenv()
 name = os.getenv("UI_TEST_USER")
 password = os.getenv("UI_TEST_PASS")
 
-def test_add_book(page: Page):
+def test_add_book_codegen(page: Page):
     #login
     page.goto("https://demoqa.com/login")
     page.get_by_placeholder("UserName").click()
@@ -39,18 +39,21 @@ def test_add_book(page: Page):
     page.locator("li").filter(has_text="Profile").click()
 
 
-def test_add_book_page(page: Page):
+def test_add_book(page: Page):
     login_page = LoginPage(page)
     login_page.open()
     login_page.log_in(name, password)
 
     profile_page = ProfilePage(page)
     profile_page.go_to_bookstore()
-    Books = Booklist_functions.get_booklist(page)
 
     bookstore_page = BookstorePage(page)
-    bookstore_page.add_book(Books[1])
-#    bookstore_page.add_book(Books[2])
+    Books = Booklist_functions.get_booklist(page)
+    assert len(Books) > 0
+    book_1 = Books.pop(0)
+#    book_2 = Books.pop(2)
+    bookstore_page.add_book(book_1)
+#    bookstore_page.add_book(book_2)
 
     profile_page.open()
     user_books = Booklist_functions.get_booklist(page)
