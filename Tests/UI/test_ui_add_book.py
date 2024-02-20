@@ -1,10 +1,8 @@
-import re
-import pytest
-from playwright.sync_api import Page, expect
-from Tests.UI.test_helpers.Login_Page import LoginPage
-from Tests.UI.test_helpers.Book_Page import BookPage
-from Tests.UI.test_helpers.Profile_Page import ProfilePage
-from Tests.UI.test_helpers.Bookstore_Page import BookstorePage
+from playwright.sync_api import Page
+from Tests.UI.test_helpers.Pages.Login_Page import LoginPage
+from Tests.UI.test_helpers.Pages.Book_Page import BookPage
+from Tests.UI.test_helpers.Pages.Profile_Page import ProfilePage
+from Tests.UI.test_helpers.Pages.Bookstore_Page import BookstorePage
 from Tests.UI.test_helpers import Booklist_functions
 from dotenv import load_dotenv
 import os
@@ -52,7 +50,11 @@ def test_add_book(page: Page):
     assert len(Books) > 0
     book_1 = Books.pop(0)
 #    book_2 = Books.pop(2)
-    bookstore_page.add_book(book_1)
+    bookstore_page.select_book(book_1)
+
+    book_page = BookPage(page)
+    book_page.add_book()
+    book_page.back_to_bookstore()
 #    bookstore_page.add_book(book_2)
 
     profile_page.open()

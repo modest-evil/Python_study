@@ -1,4 +1,5 @@
 from playwright.sync_api import Page
+from Tests.UI.test_helpers import Booklist_functions
 from dotenv import load_dotenv
 import os
 
@@ -26,7 +27,8 @@ class ProfilePage:
         self.page.get_by_placeholder("Type to search").press("Enter")
 
 
-#    def get_user_books(self):
+    def get_user_books(self):
+        return Booklist_functions.get_booklist(self.page)
 
     # def get_user_name(self):
     #     return self.page.get_by_label("userName-value")

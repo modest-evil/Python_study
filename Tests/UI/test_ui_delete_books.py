@@ -1,8 +1,17 @@
-import re
-import pytest
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+from Tests.UI.test_helpers.Pages.Login_Page import LoginPage
+from Tests.UI.test_helpers.Pages.Book_Page import BookPage
+from Tests.UI.test_helpers.Pages.Profile_Page import ProfilePage
+from Tests.UI.test_helpers.Pages.Bookstore_Page import BookstorePage
+from Tests.UI.test_helpers import Booklist_functions
+from dotenv import load_dotenv
+import os
 
-def test_delete_book(page: Page):
+load_dotenv()
+name = os.getenv("UI_TEST_USER")
+password = os.getenv("UI_TEST_PASS")
+
+def test_delete_book_raw(page: Page):
     #login
     page.goto("https://demoqa.com/login")
     page.get_by_placeholder("UserName").click()
@@ -33,7 +42,7 @@ def test_delete_book(page: Page):
     #check you have no deleted book
 
 
-def test_delete_all_books(page: Page):
+def test_delete_all_books_raw(page: Page):
     #login
     page.goto("https://demoqa.com/login")
     page.get_by_placeholder("UserName").click()
@@ -62,3 +71,33 @@ def test_delete_all_books(page: Page):
     page.get_by_role("button", name="OK").click()
 
     #check there is no books
+
+
+def test_delete_one_book(page: Page):
+    login_page = LoginPage(page)
+
+    # handled by fixture
+
+    # user exists
+    # user logged in
+    # user have three books on shelf
+    # yield
+
+    # count user books
+    # delete one book from shelf
+    # assert user have two books
+
+
+def test_delete_all_books(page: Page):
+    login_page = LoginPage(page)
+
+    # handled by fixture
+
+    # user exists
+    # user logged in
+    # user have three books on shelf
+    # yield
+
+    # count user books
+    # delete all
+    # assert user's booklist is empty
