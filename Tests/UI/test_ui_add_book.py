@@ -4,6 +4,10 @@ from Tests.UI.test_helpers.Pages.Book_Page import BookPage
 from Tests.UI.test_helpers.Pages.Profile_Page import ProfilePage
 from Tests.UI.test_helpers.Pages.Bookstore_Page import BookstorePage
 from Tests.UI.test_helpers import Booklist_functions
+
+from Tests.API.test_fixtures.demoqa_fixtures import cleanup
+from Tests.API.test_fixtures.demoqa_fixtures import create_account
+from Tests.API.test_fixtures.demoqa_fixtures import create_and_log_in
 from dotenv import load_dotenv
 import os
 
@@ -61,4 +65,25 @@ def test_add_book(page: Page):
     user_books = Booklist_functions.get_booklist(page)
 
     assert len(user_books) == 1
+
+
+def test_add_book_fixt(create_and_log_in, page: Page):
+
+    profile_page = ProfilePage(page)
+    profile_page.open()
+    profile_page.go_to_bookstore()
+
+    bookstore_page = BookstorePage(page)
+    Books = Booklist_functions.get_booklist(page)
+    book_1 = Books.pop(0)
+    bookstore_page.select_book(book_1)
+
+    book_page = BookPage(page)
+    book_page.add_book()
+    book_page.back_to_bookstore()
+
+    profile_page.open()
+    user_shelf = profile_page.get_user_books()
+
+    assert len(user_shelf) == 1
 

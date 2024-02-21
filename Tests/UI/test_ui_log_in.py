@@ -1,9 +1,14 @@
 from playwright.sync_api import Page, expect
 from Tests.UI.test_helpers.Pages.Login_Page import LoginPage
+from Tests.API.test_fixtures.demoqa_fixtures import cleanup
+from Tests.API.test_fixtures.demoqa_fixtures import create_account
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
+test_username = os.getenv("TESTUSER")
+test_password = os.getenv("PASSWORD")
+
 name = os.getenv("UI_TEST_USER")
 password = os.getenv("UI_TEST_PASS")
 profile = os.getenv("PROFILE_PAGE_URL")
@@ -31,4 +36,15 @@ def test_log_in(page: Page):
     expect(page.get_by_text("User Name :")).to_be_visible()
     expect(page.get_by_text(name)).to_be_visible()
 
+
+def test_log_in_fixt(create_account, page: Page):
+    #cleanup.create_user(test_username, test_password)
+
+    login_page = LoginPage(page)
+    login_page.open()
+    login_page.log_in(test_username, test_password)
+
+    expect(page).to_have_url(profile)
+    expect(page.get_by_text("User Name :")).to_be_visible()
+    expect(page.get_by_text(test_username)).to_be_visible()
 

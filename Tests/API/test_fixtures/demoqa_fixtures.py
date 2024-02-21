@@ -6,7 +6,7 @@ import os
 
 load_dotenv()
 url = os.getenv("URL")
-test_username = os.getenv("USERNAME")
+test_username = os.getenv("TESTUSER")
 test_password = os.getenv("PASSWORD")
 
 @pytest.fixture
