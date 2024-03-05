@@ -5,16 +5,18 @@ from Tests.UI.test_helpers.Pages.Profile_Page import ProfilePage
 from Tests.UI.test_helpers.Pages.Bookstore_Page import BookstorePage
 from Tests.UI.test_helpers import Booklist_functions
 
-from Tests.API.test_fixtures.demoqa_fixtures import cleanup
-from Tests.API.test_fixtures.demoqa_fixtures import create_account
-from Tests.API.test_fixtures.demoqa_fixtures import create_and_log_in
+from Tests.UI.test_fixtures.ui_fixtures import before_test
+from Tests.UI.test_fixtures.ui_fixtures import user_exists
+from Tests.UI.test_fixtures.ui_fixtures import user_logged_in
+
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 start_page = os.getenv("LOGIN_PAGE_URL")
 
-def test_logout_from_profile(create_and_log_in, page: Page):
+
+def test_logout_from_profile(user_logged_in, page: Page):
 
     profile_page = ProfilePage(page)
     profile_page.open()

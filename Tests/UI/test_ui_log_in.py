@@ -37,8 +37,8 @@ def test_log_in(page: Page):
     expect(page.get_by_text(name)).to_be_visible()
 
 
-def test_log_in_fixt(create_account, page: Page):
-    #cleanup.create_user(test_username, test_password)
+def test_log_in_fixt(cleanup, page: Page):
+    cleanup.create_user(test_username, test_password)
 
     login_page = LoginPage(page)
     login_page.open()
