@@ -18,10 +18,11 @@ def before_test(page):
         user.log_in(user.username, user.password)
 
     else :
-        session_storage = page.evaluate("() => JSON.stringify(sessionStorage)")
-        os.environ["SESSION_STORAGE"] = session_storage
-        # user.userId = session_storage.
-        # user.sessionToken = session_storage.
+        context = page.context.storage_state()
+        cookie = context["cookies"]
+
+        user.userId = list(filter(lambda x: x['name'] == 'userID', cookie))[0]['value']
+        user.sessionToken = list(filter(lambda x: x['name'] == 'token', cookie))[0]['value']
 
     if not user.save_user:
         user.delete_account(user.sessionToken, user.userId)

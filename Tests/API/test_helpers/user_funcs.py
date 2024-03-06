@@ -30,6 +30,9 @@ class User(Demoqa):
 
         #temp = json.loads(str(response.json()).replace("'", '"'))
         temp = response.json()
+
+        print(temp)
+
         self.userId = temp["userID"]
         print(self.userId)
         self.username = userName
