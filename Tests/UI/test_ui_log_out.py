@@ -6,13 +6,14 @@ from Tests.UI.test_helpers.Pages.Bookstore_Page import BookstorePage
 from Tests.UI.test_helpers import Booklist_functions
 
 from Tests.UI.test_fixtures.ui_fixtures import before_test
-from Tests.UI.test_fixtures.ui_fixtures import user_exists
 from Tests.UI.test_fixtures.ui_fixtures import user_logged_in
 
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
+test_username = os.getenv("TESTUSER")
+test_password = os.getenv("PASSWORD")
 start_page = os.getenv("LOGIN_PAGE_URL")
 
 
@@ -34,7 +35,7 @@ def test_logout_from_profile(user_logged_in, page: Page):
     # assert page has login page url
 
 
-def test_logout_from_bookstore(create_and_log_in, page: Page):
+def test_logout_from_bookstore(user_logged_in, page: Page):
     bookstore_page = BookstorePage(page)
     bookstore_page.open()
     bookstore_page.log_out()
