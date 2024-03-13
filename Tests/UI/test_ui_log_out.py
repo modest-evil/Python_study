@@ -17,13 +17,13 @@ test_password = os.getenv("PASSWORD")
 start_page = os.getenv("LOGIN_PAGE_URL")
 
 
-def test_logout_from_profile(user_logged_in, page: Page):
+def test_logout_from_profile(user_logged_in):
 
-    profile_page = ProfilePage(page)
+    profile_page = ProfilePage(user_logged_in)
     profile_page.open()
     profile_page.log_out()
 
-    expect(page).to_have_url(start_page)
+    expect(user_logged_in).to_have_url(start_page)
 
     # handled by fixture:
     # user exists

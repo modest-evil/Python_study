@@ -14,16 +14,16 @@ url = os.getenv("URL")
 test_username = os.getenv("TESTUSER")
 test_password = os.getenv("PASSWORD")
 
-def run(playwright: Playwright):
-    firefox = playwright.firefox
-    browser = firefox.launch()
-    page = browser.new_page()
-    page.goto("https://example.com")
-    browser.close()
-
-
-with sync_playwright() as playwright:
-    run(playwright)
+# def run(playwright: Playwright):
+#     firefox = playwright.firefox
+#     browser = firefox.launch()
+#     page = browser.new_page()
+#     page.goto("https://example.com")
+#     browser.close()
+#
+#
+# with sync_playwright() as playwright:
+#     run(playwright)
 
 
 @pytest.fixture()
@@ -54,27 +54,32 @@ def before_test(page):
 
 
 @pytest.fixture(params=[(test_username, test_password)])
-def user_logged_in(request, before_test, page):
+def user_logged_in(request, before_test, page, browser):
     username, password = request.param
     before_test.create_user(username, password)
     # before_test.log_in(username, password)
 
-    browser = playwright.firefox.launch()
+    page.context.close()
+    # browser = playwright.firefox.launch()
     context = browser.new_context()
-    page = context.new_page()
+    n_page = context.new_page()
 
-    login_page = LoginPage(page)
+    login_page = LoginPage(n_page)
     login_page.open()
     login_page.log_in(username, password)
 
-    profile = ProfilePage(page)
+    # profile = ProfilePage(page)
+    #
+    # profile.context.storage_state()
 
-    profile.context.storage_state()
+    storage = n_page.context.storage_state(path="state.json")
 
-    storage = profile.context.storage_state(path="state.json")
+    context.close()
+
     context = browser.new_context(storage_state="state.json")
+    restored_page = context.new_page()
 
-    yield before_test
+    yield restored_page
 
 
 @pytest.fixture(params=[(test_username, test_password)])
