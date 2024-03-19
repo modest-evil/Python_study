@@ -18,6 +18,11 @@ class ProfilePage:
     def log_out(self):
         self.page.get_by_role("button", name="Log out").click()
 
+    def delete_account(self):
+        self.page.get_by_role("button", name="Delete Account").click()
+        self.page.once("dialog", lambda dialog: dialog.dismiss())
+        self.page.get_by_role("button", name="OK").click()
+
     def go_to_bookstore(self):
         self.page.get_by_role("button", name="Go To Book Store").click()
 

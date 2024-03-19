@@ -31,12 +31,18 @@ def before_test(page):
     user = User(url)
     yield user
 
+# if user is not logged in -> log in user
+# why it does not go through that?
+# log in user gives us Session token
     if not (user.is_logged_in(user.username, user.password)["body"]):
+        print(user.is_logged_in())
         user.log_in(user.username, user.password)
 
+# there is no context here cause user is NOT logged in, nothing to collect from context
+# still have no session token
     else :
-        context = page.context.storage_state()
-        cookie = context["cookies"]
+        latecontext = page.context.storage_state()
+        cookie = latecontext["cookies"]
 
         user.userId = list(filter(lambda x: x['name'] == 'userID', cookie))[0]['value']
         user.sessionToken = list(filter(lambda x: x['name'] == 'token', cookie))[0]['value']
@@ -68,9 +74,9 @@ def user_logged_in(request, before_test, page, browser):
     login_page.open()
     login_page.log_in(username, password)
 
-    # profile = ProfilePage(page)
-    #
-    # profile.context.storage_state()
+# will it work to collect session token here?
+    cookie = page.context.storage_state()["cookies"]
+    before_test.sessionToken = list(filter(lambda x: x['name'] == 'token', cookie))[0]['value']
 
     storage = n_page.context.storage_state(path="state.json")
 
