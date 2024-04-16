@@ -4,6 +4,10 @@ from Tests.UI.test_helpers.Pages.Book_Page import BookPage
 from Tests.UI.test_helpers.Pages.Profile_Page import ProfilePage
 from Tests.UI.test_helpers.Pages.Bookstore_Page import BookstorePage
 from Tests.UI.test_helpers import Booklist_functions
+
+from Tests.UI.test_fixtures.ui_fixtures import before_test
+from Tests.UI.test_fixtures.ui_fixtures import user_exists_has_books
+
 from dotenv import load_dotenv
 import os
 
@@ -73,31 +77,38 @@ def test_delete_all_books_raw(page: Page):
     #check there is no books
 
 
-def test_delete_one_book(page: Page):
-    login_page = LoginPage(page)
+def test_delete_one_book(user_exists_has_books):
 
-    # handled by fixture
-
-    # user exists
-    # user logged in
-    # user have three books on shelf
-    # yield
+    profile_page = ProfilePage(user_exists_has_books)
+    profile_page.open()
 
     # count user books
     # delete one book from shelf
     # assert user have two books
 
+    booklist_before = profile_page.get_user_books()
+    book_amount = len(booklist_before)
+    bookName = booklist_before.pop(1)
 
-def test_delete_all_books(page: Page):
-    login_page = LoginPage(page)
+    profile_page.delete_book(bookName)
 
-    # handled by fixture
+    booklist_after = profile_page.get_user_books()
 
-    # user exists
-    # user logged in
-    # user have three books on shelf
-    # yield
+    assert book_amount - len(booklist_after) == 1
+
+
+
+def test_delete_all_books(user_exists_has_books):
+
+    profile_page = ProfilePage(user_exists_has_books)
+    profile_page.open()
+
+    profile_page.delete_all_books()
 
     # count user books
     # delete all
     # assert user's booklist is empty
+
+    booklist = profile_page.get_user_books()
+
+    assert len(booklist) == 0

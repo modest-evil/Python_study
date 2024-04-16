@@ -25,35 +25,19 @@ def test_logout_from_profile(user_logged_in):
 
     expect(user_logged_in).to_have_url(start_page)
 
-    # handled by fixture:
-    # user exists
-    # user logged in
-    # yield
 
-    # profile page open
-    # log out
-    # assert page has login page url
+def test_logout_from_bookstore(user_logged_in):
 
-
-def test_logout_from_bookstore(user_logged_in, page: Page):
-    bookstore_page = BookstorePage(page)
+    bookstore_page = BookstorePage(user_logged_in)
     bookstore_page.open()
     bookstore_page.log_out()
 
-    expect(page).to_have_url(start_page)
-
-    # handled by fixture:
-    # user exists
-    # user logged in
-    # yield
-
-    # bookstore page open
-    # log out
-    # assert page has login page url
+    expect(user_logged_in).to_have_url(start_page)
 
 
-def test_logout_from_bookpage(page: Page):
-    book_page = BookPage(page)
+def test_logout_from_bookpage(user_logged_in):
+
+    book_page = BookPage(user_logged_in)
 
     # handled by fixture:
     # user exists

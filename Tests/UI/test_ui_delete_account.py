@@ -12,6 +12,9 @@ test_password = os.getenv("PASSWORD")
 start_page = os.getenv("LOGIN_PAGE_URL")
 
 def test_user_delete_account(user_logged_in):
+    user = before_test
+    user.save_user = True
+
     profile_page = ProfilePage(user_logged_in)
     profile_page.open()
     profile_page.delete_account()
