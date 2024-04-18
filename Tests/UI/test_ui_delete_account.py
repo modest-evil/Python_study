@@ -11,7 +11,7 @@ test_username = os.getenv("TESTUSER")
 test_password = os.getenv("PASSWORD")
 start_page = os.getenv("LOGIN_PAGE_URL")
 
-def test_user_delete_account(user_logged_in):
+def test_user_delete_account(user_logged_in, before_test):
     user = before_test
     user.save_user = True
 

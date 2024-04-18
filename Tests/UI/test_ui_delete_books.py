@@ -87,14 +87,15 @@ def test_delete_one_book(user_exists_has_books):
     # assert user have two books
 
     booklist_before = profile_page.get_user_books()
-    book_amount = len(booklist_before)
-    bookName = booklist_before.pop(1)
+    bookName = booklist_before[0]
 
     profile_page.delete_book(bookName)
 
+    user_exists_has_books.reload()
     booklist_after = profile_page.get_user_books()
 
-    assert book_amount - len(booklist_after) == 1
+    #check booklist_after has no deleted book
+    assert len(booklist_before) - len(booklist_after) == 1
 
 
 
