@@ -78,13 +78,8 @@ def test_delete_all_books_raw(page: Page):
 
 
 def test_delete_one_book(user_exists_has_books):
-
     profile_page = ProfilePage(user_exists_has_books)
     profile_page.open()
-
-    # count user books
-    # delete one book from shelf
-    # assert user have two books
 
     booklist_before = profile_page.get_user_books()
     bookName = booklist_before[0]
@@ -94,21 +89,15 @@ def test_delete_one_book(user_exists_has_books):
     user_exists_has_books.reload()
     booklist_after = profile_page.get_user_books()
 
-    #check booklist_after has no deleted book
-    assert len(booklist_before) - len(booklist_after) == 1
+    assert not (bookName in booklist_after)
 
 
 
 def test_delete_all_books(user_exists_has_books):
-
     profile_page = ProfilePage(user_exists_has_books)
     profile_page.open()
 
     profile_page.delete_all_books()
-
-    # count user books
-    # delete all
-    # assert user's booklist is empty
 
     booklist = profile_page.get_user_books()
 

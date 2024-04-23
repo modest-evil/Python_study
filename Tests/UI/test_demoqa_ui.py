@@ -21,6 +21,18 @@ import Tests.UI.test_helpers.Booklist_functions
 #     page.goto("https://demoqa.com/login")
 #     yield
 #
+# there is no context here cause user is NOT logged in, nothing to collect from context
+# still have no session token
+#    else :
+#         latecontext = page.context.storage_state()
+#         cookie = latecontext["cookies"]
+#
+#         user.userId = list(filter(lambda x: x['name'] == 'userID', cookie))[0]['value']
+#         user.sessionToken = list(filter(lambda x: x['name'] == 'token', cookie))[0]['value']
+
+    # if not user.save_user:
+    #     user.delete_account(user.sessionToken, user.userId)
+
 #     print("after the test runs")
 
 def test_main_navigation(page: Page):

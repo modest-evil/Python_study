@@ -18,7 +18,6 @@ start_page = os.getenv("LOGIN_PAGE_URL")
 
 
 def test_logout_from_profile(user_logged_in):
-
     profile_page = ProfilePage(user_logged_in)
     profile_page.open()
     profile_page.log_out()
@@ -27,7 +26,6 @@ def test_logout_from_profile(user_logged_in):
 
 
 def test_logout_from_bookstore(user_logged_in):
-
     bookstore_page = BookstorePage(user_logged_in)
     bookstore_page.open()
     bookstore_page.log_out()
@@ -36,7 +34,6 @@ def test_logout_from_bookstore(user_logged_in):
 
 
 def test_logout_from_bookpage(user_logged_in):
-
     book_page = BookPage(user_logged_in)
 
     # handled by fixture:

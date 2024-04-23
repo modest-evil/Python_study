@@ -15,42 +15,15 @@ test_username = os.getenv("TESTUSER")
 test_password = os.getenv("PASSWORD")
 profile = os.getenv("PROFILE_PAGE_URL")
 
-# def run(playwright: Playwright):
-#     firefox = playwright.firefox
-#     browser = firefox.launch()
-#     page = browser.new_page()
-#     page.goto("https://example.com")
-#     browser.close()
-#
-#
-# with sync_playwright() as playwright:
-#     run(playwright)
-
 
 @pytest.fixture()
 def before_test(page):
     user = User(url)
     yield user
 
-# if user is not logged in -> log in user
-# why it does not go through that?
-# log in user gives us Session token
-
     if not user.save_user:
         user.log_in(user.username, user.password)
         user.delete_account(user.sessionToken, user.userId)
-
-# there is no context here cause user is NOT logged in, nothing to collect from context
-# still have no session token
-#    else :
-#         latecontext = page.context.storage_state()
-#         cookie = latecontext["cookies"]
-#
-#         user.userId = list(filter(lambda x: x['name'] == 'userID', cookie))[0]['value']
-#         user.sessionToken = list(filter(lambda x: x['name'] == 'token', cookie))[0]['value']
-
-    # if not user.save_user:
-    #     user.delete_account(user.sessionToken, user.userId)
 
 
 @pytest.fixture(params=[(test_username, test_password)])
@@ -59,7 +32,6 @@ def user_logged_in(request, before_test, page, browser):
     before_test.create_user(username, password)
 
     page.context.close()
-    # browser = playwright.firefox.launch()
     context = browser.new_context()
     n_page = context.new_page()
 
@@ -68,12 +40,7 @@ def user_logged_in(request, before_test, page, browser):
     login_page.log_in(username, password)
     expect(n_page).to_have_url(profile)
 
-# will it work to collect session token here?
-#     cookie = page.context.storage_state()["cookies"]
-#     before_test.sessionToken = list(filter(lambda x: x['name'] == 'token', cookie))[0]['value']
-
     storage = n_page.context.storage_state(path="state.json")
-
     context.close()
 
     context = browser.new_context(storage_state="state.json")
@@ -102,7 +69,6 @@ def user_exists_has_books(request, before_test, page, browser):
     # use for delete book and delete all books test
 
     page.context.close()
-    # browser = playwright.firefox.launch()
     context = browser.new_context()
     n_page = context.new_page()
 

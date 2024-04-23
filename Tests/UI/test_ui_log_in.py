@@ -9,22 +9,6 @@ test_username = os.getenv("TESTUSER")
 test_password = os.getenv("PASSWORD")
 profile = os.getenv("PROFILE_PAGE_URL")
 
-# name = os.getenv("UI_TEST_USER")
-# password = os.getenv("UI_TEST_PASS")
-
-
-# def test_log_in_user_exists(page: Page):
-#     page.goto("https://demoqa.com/login")
-#
-#     page.get_by_placeholder("UserName").click()
-#     page.get_by_placeholder("UserName").fill("Anne")
-#     page.get_by_placeholder("Password").click()
-#     page.get_by_placeholder("Password").fill("Anne123!")
-#     page.get_by_role("button", name="Login").click()
-#
-#     expect(page).to_have_url("https://demoqa.com/profile")
-#     page.get_by_text("Anne").click()
-
 
 def test_log_in(before_test, page: Page):
     before_test.create_user(test_username, test_password)
